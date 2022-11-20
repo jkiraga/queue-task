@@ -1,0 +1,55 @@
+openapi: "3.0.0"
+info:
+  title: Resource download API
+  version: 1.0.0
+paths:
+  /resource/download:
+    post:
+      summary: Adds resource download request
+      operationId: saveDownloadRequest
+      tags:
+        - resource
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceDownloadRequestDTO'
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+             schema:
+              $ref: '#/components/schemas/ResourceDownloadResponseDTO'
+        400:
+          description: Invalid url
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisplayableErrorDTO'
+        429:
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisplayableErrorDTO'
+components:
+  schemas:
+    ResourceDownloadRequestDTO:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+    ResourceDownloadResponseDTO:
+      type: object
+      properties:
+        message:
+          type: string
+    DisplayableErrorDTO:
+      type: object
+      properties:
+        message:
+          type: string
